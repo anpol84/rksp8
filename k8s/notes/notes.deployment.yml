@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: notes
+spec:
+   replicas: 2
+   selector:
+      matchLabels:
+         components: notes
+   template:
+      metadata:
+         labels:
+            components: notes
+      spec:
+         containers:
+            - name: notes
+              image: anpol84/note:0.0.2
+              ports:
+                 - containerPort: 8081
+              env:
+                 - name: POSTGRES_URL
+                   value: jdbc:postgresql://db:5432/notes?schema=public&user=user&password=password
+                 - name: REDIRECT_URL
+                   value: http://172.27.167.91/user
+                 - name: LOG_URL
+                   value: http://172.27.167.91
+                 - name: VALIDATOR_URL
+                   value: http://172.27.167.91

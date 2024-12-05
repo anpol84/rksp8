@@ -1,0 +1,29 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: note
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_URL}
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  cloud:
+    openfeign:
+      client:
+        config:
+          log:
+            url: ${LOG_URL}
+          validator:
+            url: ${VALIDATOR_URL}
+
+redirect_url: ${REDIRECT_URL}

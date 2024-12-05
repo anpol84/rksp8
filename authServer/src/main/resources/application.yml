@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: authServer
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: Ov23liJd1vQlW5OLrT7O
+            client-secret: 1c98d5eca9ed18e9bb0fa52b33a63d7ee7ff3e6f
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_URL}
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect

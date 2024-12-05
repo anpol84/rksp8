@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Create/Edit Note</title>
+  <script>
+    function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) {
+                c_end = document.cookie.length;
+            }
+            return unescape(document.cookie.substring(c_start, c_end));
+        }
+    }
+    return "";
+}
+window.onload = function() {
+        const userId = getCookie('id');
+        const login = getCookie('login');
+        if (!userId || !login) {
+            document.cookie = "redirectUrl=" + window.location.href + "; path=/";
+            const a = "[[${redirect_url}]]"
+            console.log(a)
+            window.location.href = "[[${redirect_url}]]";
+        }
+   }
+  </script>
+</head>
+<body>
+
+<h1 th:text="${note.id != null} ? 'Edit Note' : 'Create Note'"></h1>
+
+<form th:action="@{${note.id != null} ? '/notes/save' : '/notes/save'}" method="post" th:object="${note}">
+  <input type="hidden" th:field="*{id}" />
+
+  <label for="title">Title:</label>
+  <input type="text" th:field="*{title}" required />
+
+  <label for="content">Content:</label>
+  <textarea th:field="*{content}" required></textarea>
+
+  <button type="submit">Save</button>
+</form>
+
+<a href="/notes">Back to Notes List</a>
+
+</body>
+</html>

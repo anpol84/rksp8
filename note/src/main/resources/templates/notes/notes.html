@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Notes List</title>
+</head>
+<script>
+    function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) {
+                c_end = document.cookie.length;
+            }
+            return unescape(document.cookie.substring(c_start, c_end));
+        }
+    }
+    return "";
+}
+window.onload = function() {
+        const userId = getCookie('id');
+        const login = getCookie('login');
+        if (!userId || !login) {
+            document.cookie = "redirectUrl=" + window.location.href + "; path=/";
+            const a = "[[${redirect_url}]]"
+            console.log(a)
+            window.location.href = "[[${redirect_url}]]";
+        }
+   }
+</script>
+<body>
+
+<h1>Notes</h1>
+
+<a th:href="@{/notes/new}">Create New Note</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="note : ${notes}">
+        <td th:text="${note.title}"></td>
+        <td th:text="${note.content}"></td>
+        <td>
+            <a th:href="@{/notes/edit/{id}(id=${note.id})}">Edit</a>
+            <form th:action="@{/notes/delete/{id}(id=${note.id})}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

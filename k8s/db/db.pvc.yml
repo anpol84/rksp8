@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+   name: db
+   labels:
+      components: db
+spec:
+   storageClassName: microk8s-hostpath
+   resources:
+      requests:
+         storage: 5Gi
+   accessModes:
+      - ReadWriteOnce

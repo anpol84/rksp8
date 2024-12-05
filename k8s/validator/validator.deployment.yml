@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: validator
+spec:
+   replicas: 2
+   selector:
+      matchLabels:
+         components: validator
+   template:
+      metadata:
+         labels:
+            components: validator
+      spec:
+         containers:
+            - name: validator
+              image: anpol84/validator:0.0.1
+              ports:
+                 - containerPort: 8082
+              env:
+                 - name: POSTGRES_URL
+                   value: jdbc:postgresql://db:5432/auth?schema=public&user=user&password=password
